@@ -14,6 +14,13 @@ page_soup = soup(page_html,"html.parser")
 #grabs each product
 containers = page_soup.findAll("div",{"class":"item-container"})
 
+#creating a csv file and setting it to write mode
+filename = "products.csv"
+f = open(filename,"w")
+
+headers = "brand,product_name,shipping\n"
+f.write(headers)
+
 for container in containers:
     brand = container.div.div.a.img["title"]
 
@@ -27,3 +34,6 @@ for container in containers:
     print("product_name: "+product_name)
     print("shipping: "+shipping)
     print("\n")
+
+    f.write(brand+","+product_name.replace(",","|")+","+shipping+"\n")
+f.close()
